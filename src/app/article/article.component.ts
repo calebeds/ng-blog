@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../model/article';
 import { ArticleService } from '../service/article.service';
@@ -20,7 +20,8 @@ export class ArticleComponent implements OnInit {
     private articleService: ArticleService,
     private router: Router,
     private titleService: Title,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private meta: Meta
     ) { }
 
   ngOnInit(): void {
@@ -32,8 +33,36 @@ export class ArticleComponent implements OnInit {
             this.router.navigateByUrl('404');
             return;
           }
+          const concatdTitle = this.sharedService.concatTitle(article.title);
           this.article = article;
-          this.titleService.setTitle(this.sharedService.concatTitle(article.title));
+          this.titleService.setTitle(concatdTitle.value);
+          this.meta.addTags([
+            {name: 'description', content: this.article.description},
+            {
+              property: "og:title", 
+              content: concatdTitle.value
+            },
+            {
+              property: 'og:type',
+              content: 'website'
+            },
+            {
+              property: 'og:url',
+              content: this.sharedService.baseUrl.value + this.article.key
+            },
+            {
+              property: 'og:image',
+              content: this.article.imageUrl
+            },
+            {
+              property: 'og:description',
+              content: this.article.description
+            },
+            {
+              property: 'og:site_name',
+              content: this.sharedService.blogTitle
+            }
+          ]);
         }
       );
     })

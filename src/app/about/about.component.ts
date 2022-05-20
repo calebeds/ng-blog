@@ -16,7 +16,7 @@ export class AboutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle(this.sharedService.concatTitle(this.title));
+    this.titleService.setTitle(this.sharedService.concatTitle(this.title).value);
   }
 
 }
