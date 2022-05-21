@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Article } from '../model/article';
-import { ARTICLES } from '../model/mock-articles';
 import { ArticleService } from '../service/article.service';
 import { SharedService } from '../service/shared.service';
 

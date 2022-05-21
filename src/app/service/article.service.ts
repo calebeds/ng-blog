@@ -1,21 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { ArticleComponent } from '../article/article.component';
 import { Article } from '../model/article';
-import { ARTICLES } from '../model/mock-articles';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ArticleService {
-    constructor() {}
+    private readonly URL = 'http://localhost:8000';
+
+    constructor(private http: HttpClient) {
+
+    }
 
     getArticles(): Observable<Article[]> {
-        const articles: Article[] = ARTICLES;
-        return of(articles);
+       return this.http.get<Article[]>(`${this.URL}/articles`);
     }
 
     getArticle(key: string): Observable<Article> {
-        const articles: Article[] = ARTICLES.filter(a => a.key === key);//Return the article whose key is equal to the key of the article passed
-        return of(articles[0]);//There will be only one article so return it as observable
+        return this.http.get<Article>(`${this.URL}/articles/${key}`);
     }
 }
