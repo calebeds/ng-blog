@@ -20,3 +20,4 @@ app.get('/', function(request, response) {
 });
 
 require('./articles')(app, sql);
+require('./dashboard')(app, sql);
