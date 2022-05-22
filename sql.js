@@ -18,7 +18,7 @@ const Article = sequelize.define('article', {
     imageUrl: { type: Sequelize.STRING }
 });
 
-init = function() {
+const init = function() {
     sequelize
         .authenticate()
         .then(() => {
@@ -47,4 +47,16 @@ init = function() {
     });
 }; 
 
+const getArticles = function(callback) {
+    Article.findAll({order: sequelize.literal('date DESC')}).then(articles => callback(articles));
+}
+
+const getArticleByKey = (options ,callback) => {
+    Article.findOne({where: {key: options.key}}).then(
+        article => callback(article)
+    )
+}
+
 module.exports.init = init;
+module.exports.getArticles = getArticles;
+module.exports.getArticleByKey = getArticleByKey;
