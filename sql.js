@@ -76,7 +76,19 @@ const getDashboardArticles = function(callback) {
     Article.findAll({order: sequelize.literal('date DESC')}).then(articles => {callback(articles)}); //It will change
 }
 
+const updateArticlePublishState= (req, callback) => {
+    Article.findOne({where: { id: req.id }}).then(article => {
+        if(article !== null) {
+            article.update({
+                published: req.published
+            });
+        }//This updates the article on the database
+        callback(article);
+    });
+}
+
 module.exports.init = init;
 module.exports.getArticles = getArticles;
 module.exports.getArticleByKey = getArticleByKey;
 module.exports.getDashboardArticles = getDashboardArticles;
+module.exports.updateArticlePublishState = updateArticlePublishState;
