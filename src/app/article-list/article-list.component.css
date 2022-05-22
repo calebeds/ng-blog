@@ -11,6 +11,7 @@
 
 h3 {
     font-size: 32px;
+    font-family: 'Dancing Script', cursive;
 }
 
 img {
@@ -20,4 +21,8 @@ img {
 .continue-reading {
     font-style: italic;
     color: grey;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
 }

@@ -24,4 +24,21 @@ export class ArticleOverviewComponent implements OnInit {
     })
   }
 
+  togglePublishState(article: Article): void {
+    
+    this.dashboardService.togglePublishState(article).subscribe(
+      article => {
+        article.published = !article.published;
+        const index: number = this.articles.findIndex(
+          currentArticle => {
+            return currentArticle.id === article.id
+          }
+        );
+        this.articles[index] = article;
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
 }
