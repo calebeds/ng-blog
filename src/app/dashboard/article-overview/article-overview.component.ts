@@ -25,10 +25,9 @@ export class ArticleOverviewComponent implements OnInit {
   }
 
   togglePublishState(article: Article): void {
-    
+    article.published = !article.published;
     this.dashboardService.togglePublishState(article).subscribe(
       article => {
-        article.published = !article.published;
         const index: number = this.articles.findIndex(
           currentArticle => {
             return currentArticle.id === article.id
@@ -37,6 +36,7 @@ export class ArticleOverviewComponent implements OnInit {
         this.articles[index] = article;
       },
       error => {
+        article.published = !article.published;
         console.error(error);
       }
     );
