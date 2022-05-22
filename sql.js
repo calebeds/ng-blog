@@ -15,7 +15,8 @@ const Article = sequelize.define('article', {
     date: { type: Sequelize.DATE },
     content: { type: Sequelize.TEXT },
     description: { type: Sequelize.TEXT },
-    imageUrl: { type: Sequelize.STRING }
+    imageUrl: { type: Sequelize.STRING },
+    viewCount: { type: Sequelize.INTEGER }
 });
 
 const init = function() {
@@ -48,12 +49,19 @@ const init = function() {
 }; 
 
 const getArticles = function(callback) {
-    Article.findAll({order: sequelize.literal('date DESC')}).then(articles => callback(articles));
+    Article.findAll({order: sequelize.literal('date DESC')}).then(articles => {callback(articles)});
 }
 
 const getArticleByKey = (options ,callback) => {
     Article.findOne({where: {key: options.key}}).then(
-        article => callback(article)
+        article => {
+            if(article != null) {
+                article.update({
+                    viewCount: ++article.viewCount
+                });
+            }
+            callback(article)
+        } 
     )
 }
 
