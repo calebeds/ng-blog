@@ -14,4 +14,10 @@ module.exports = (app, sql) => {
             res.send(article);
         })
     });
+
+    app.get('/dashboard/article/:key', (req, res) => {
+        sql.getDashboardArticleByKey(req.params.key, article => {
+            res.send(article);
+        });
+    });
 }
