@@ -93,9 +93,24 @@ const getDashboardArticleByKey = (key, callback) => {
     })
 }
 
+const updateArticle = (req, callback) => {
+    Article.findOne({where: { id: req.id }}).then((article) => {
+        article.update({
+            title: req.title,
+            key: req.key,
+            date: req.date,
+            imageUrl: req.imageUrl,
+            description: req.description,
+            content: req.content
+        });
+        callback(article);
+    })
+}
+
 module.exports.init = init;
 module.exports.getArticles = getArticles;
 module.exports.getArticleByKey = getArticleByKey;
 module.exports.getDashboardArticles = getDashboardArticles;
 module.exports.updateArticlePublishState = updateArticlePublishState;
 module.exports.getDashboardArticleByKey = getDashboardArticleByKey;
+module.exports.updateArticle = updateArticle;

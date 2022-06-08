@@ -20,4 +20,10 @@ module.exports = (app, sql) => {
             res.send(article);
         });
     });
+
+    app.put('/dashboard/article', (req, res) => {
+        sql.updateArticle(req.body, (result) => {
+            res.send(result);
+        })
+    })
 }
