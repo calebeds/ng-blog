@@ -19,24 +19,23 @@
     background-color: #f7f8fa;
     border-radius: 0.25rem;
     font-weight: 600;
+    font-family: 'Dancing Script', cursive;
 }
 
 .overview-row {
     display: table-row;
+    font-family: 'Lato', sans-serif;
 }
 
 .overview-cell {
     display: table-cell;
     padding: 1rem;
     vertical-align: middle;
+    text-align: center;
 }
 
 .overview-image {
     width: 50px;
-}
-
-a {
-    color: grey;
 }
 
 .center {

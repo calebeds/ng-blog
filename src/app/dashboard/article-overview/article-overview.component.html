@@ -1,10 +1,11 @@
 <div class="overview">
     <div class="overview-head">
-        <div class="overview-cell"></div>
+        <div class="overview-cell">#</div>
         <div class="overview-cell">Title</div>
         <div class="overview-cell">Date</div>
         <div class="overview-cell">Views</div>
         <div class="overview-cell">Online</div>
+        <div class="overview-cell">Edit</div>
     </div>
     <div class="overview-row" *ngFor="let article of articles">
         <div class="overview-cell"><img [src]="article.imageUrl" class="overview-image" /></div>
@@ -17,6 +18,12 @@
                 [ngClass]="{'online' : article.published, 'offline' : !article.published}">
                 
             </span>
+        </div>
+        <div class="overview-cell">
+            <a routerLink="/dashboard/{{article.key}}"><span class="material-icons">
+                mode_edit
+                </span></a>
+
         </div>
     </div>
 </div>
