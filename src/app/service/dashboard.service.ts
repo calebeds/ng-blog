@@ -11,9 +11,7 @@ export class DashboardService {
     
     // private readonly URL = 'http://localhost:8000';
 
-    constructor (private http: HttpClient) {
-
-    }
+    constructor (private http: HttpClient) {}
 
     getArticles(): Observable<Article[]> {
         return this.http.get<Article[]>(`${environment.apiUrl}/dashboard/overview`);
@@ -29,5 +27,9 @@ export class DashboardService {
 
     updateArticle(article: Article): Observable<Article> {
         return this.http.put<Article>(`${environment.apiUrl}/dashboard/article`, article);
+    }
+
+    deleteArticle(id: number): Observable<unknown> {
+        return this.http.delete<unknown>(`${environment.apiUrl}/dashboard/article/${id}`)
     }
 }
