@@ -38,3 +38,8 @@ textarea {
 label {
     font-family: 'Dancing Script', cursive;
 }
+
+.character-count {
+    font-size: 14px;
+    margin-top: -6px;
+}

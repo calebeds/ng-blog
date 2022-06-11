@@ -1,11 +1,11 @@
 <div class="wrapper">
     <div class="property">
         <label>Title: </label>
-        <input type="text" [(ngModel)]="article.title" />
+        <input type="text" [(ngModel)]="article.title" (keyup)="updateKey()" (blur)="updateKey()"/>
     </div>
     <div class="property">
         <label>Key: </label>
-        <input type="text" [(ngModel)]="article.key" />
+        <input type="text" [(ngModel)]="article.key" disabled="disabled"/>
     </div>
     <div class="property">
         <label>Date: </label>
@@ -18,10 +18,16 @@
     <div class="property">
         <label>Description: </label>
         <textarea class="description" [(ngModel)]="article.description"></textarea>
+        <div class="character-count">Characters: {{article.description.length}}</div>
     </div>
     <div class="property">
         <label>Content: </label>
         <textarea class="content" [(ngModel)]="article.content"></textarea>
+    </div>
+    <div class="character-count">
+        Article is 
+        <span style="color: green" *ngIf="article.published">online</span>
+        <span style="color: red" *ngIf="!article.published">offline</span>
     </div>
     <div>
         <button (click)="deleteArticle()" style="color: red; margin-right: 10px" *ngIf="!isNew">Delete</button>
