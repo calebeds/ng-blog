@@ -34,6 +34,12 @@ module.exports = (app, sql) => {
             } else {
                 res.status(400).send({ message: 'Article could not be deleted!' });
             }
-        })
-    })
+        });
+    });
+
+    app.post('/dashboard/article', (req,res) => {
+        sql.createArticle(req.body, (result) => {
+            res.send(result);
+        });
+    });
 }

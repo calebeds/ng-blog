@@ -119,6 +119,17 @@ const deleteArticle = (id, callback) => {
     });
 }
 
+const createArticle = (req, callback) => {
+    Article.create({
+        title: req.title,
+        key: req.key,
+        date: req.date,
+        imageUrl: req.imageUrl,
+        description: req.description,
+        content: req.content
+    }).then(article => callback(article));
+}
+
 module.exports.init = init;
 module.exports.getArticles = getArticles;
 module.exports.getArticleByKey = getArticleByKey;
@@ -127,3 +138,4 @@ module.exports.updateArticlePublishState = updateArticlePublishState;
 module.exports.getDashboardArticleByKey = getDashboardArticleByKey;
 module.exports.updateArticle = updateArticle;
 module.exports.deleteArticle = deleteArticle;
+module.exports.createArticle = createArticle;
