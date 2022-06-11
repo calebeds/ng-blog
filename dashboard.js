@@ -24,6 +24,16 @@ module.exports = (app, sql) => {
     app.put('/dashboard/article', (req, res) => {
         sql.updateArticle(req.body, (result) => {
             res.send(result);
+        });
+    });
+
+    app.delete('/dashboard/article/:id', (req, res) => {
+        sql.deleteArticle(req.params.id, result => {
+            if(result != null) {
+                res.send(result);
+            } else {
+                res.status(400).send({ message: 'Article could not be deleted!' });
+            }
         })
     })
 }
