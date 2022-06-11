@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, ObservableLike } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Article } from '../model/article';
 
@@ -8,7 +8,6 @@ import { Article } from '../model/article';
     providedIn: 'root'
 })
 export class DashboardService {
-    
     // private readonly URL = 'http://localhost:8000';
 
     constructor (private http: HttpClient) {}
@@ -32,4 +31,8 @@ export class DashboardService {
     deleteArticle(id: number): Observable<unknown> {
         return this.http.delete<unknown>(`${environment.apiUrl}/dashboard/article/${id}`)
     }
+
+    createArticle(article: Article): Observable<Article> {
+        return this.http.post<Article>(`${environment.apiUrl}/dashboard/article`, article);
+      }
 }
