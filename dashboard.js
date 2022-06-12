@@ -1,19 +1,13 @@
-const jwtUtil = require('./jwtUtil');
+const isAuthenticated = require('./isAuthenticated');
 
 module.exports = (app, sql) => {
-    app.get('/dashboard/overview', (req, res) => {
-        const token = req.get('Authorization');
-        const verified = jwtUtil.verifyJwt(token);
-        if(!verified) {
-            res.sendStatus(401);
-        }
-
+    app.get('/dashboard/overview', isAuthenticated, (req, res) => {
         sql.getDashboardArticles(result => {
             res.send(result);
         });
     });
 
-    app.put('/dashboard/article/publish', (req, res) => {
+    app.put('/dashboard/article/publish', isAuthenticated, (req, res) => {
         const id = req.body.id;
         const published = req.body.published;
         sql.updateArticlePublishState({
@@ -23,19 +17,19 @@ module.exports = (app, sql) => {
         })
     });
 
-    app.get('/dashboard/article/:key', (req, res) => {
+    app.get('/dashboard/article/:key', isAuthenticated, (req, res) => {
         sql.getDashboardArticleByKey(req.params.key, article => {
             res.send(article);
         });
     });
 
-    app.put('/dashboard/article', (req, res) => {
+    app.put('/dashboard/article', isAuthenticated, (req, res) => {
         sql.updateArticle(req.body, (result) => {
             res.send(result);
         });
     });
 
-    app.delete('/dashboard/article/:id', (req, res) => {
+    app.delete('/dashboard/article/:id', isAuthenticated, (req, res) => {
         sql.deleteArticle(req.params.id, result => {
             if(result != null) {
                 res.send(result);
@@ -45,7 +39,7 @@ module.exports = (app, sql) => {
         });
     });
 
-    app.post('/dashboard/article', (req,res) => {
+    app.post('/dashboard/article', isAuthenticated, (req,res) => {
         sql.createArticle(req.body, (result) => {
             res.send(result);
         });
