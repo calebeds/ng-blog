@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { AuthService } from '../service/auth.service';
 
@@ -11,7 +12,10 @@ export class LoginComponent {
   user = new User();
   errorMessage = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+    ) { }
 
   login() {
     this.errorMessage = '';
@@ -20,6 +24,8 @@ export class LoginComponent {
         if(typeof localStorage !== 'undefined') {
           localStorage.setItem('token', result.token);
         }
+
+        this.router.navigate(['/dashboard']);
       },
       err => {
         console.log(err);
