@@ -171,7 +171,6 @@ const login = (req, callback) => {
                     .toString('hex');
             if(passwordHash === user.password) {
                 callback(true);
-                console.log('here');
                 return;
                 
             }

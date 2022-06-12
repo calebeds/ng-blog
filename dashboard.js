@@ -1,5 +1,13 @@
+const jwtUtil = require('./jwtUtil');
+
 module.exports = (app, sql) => {
     app.get('/dashboard/overview', (req, res) => {
+        const token = req.get('Authorization');
+        const verified = jwtUtil.verifyJwt(token);
+        if(!verified) {
+            res.sendStatus(401);
+        }
+
         sql.getDashboardArticles(result => {
             res.send(result);
         });
