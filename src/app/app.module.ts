@@ -14,6 +14,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ArticleOverviewComponent } from './dashboard/article-overview/article-overview.component';
 import { EditArticleComponent } from './dashboard/edit-article/edit-article.component';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     DashboardComponent,
     ArticleOverviewComponent,
     EditArticleComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

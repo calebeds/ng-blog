@@ -6,6 +6,18 @@ body {
 }
 
 
+input {
+    font-size: 21px;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin: 2px;
+    text-indent: 2px;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+
 button {
     background-color: #f7f8fa;
     border: 1px solid rgba(0, 0, 0, 0.125);
