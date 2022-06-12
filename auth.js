@@ -28,4 +28,9 @@ module.exports = (app, sql) => {
             }
         })
     });
+
+    app.post('/user/auth', (req, res) => {
+        let valid = jwtUtil.verifyJwt(req.body.token);
+        res.send(valid != false);
+    });
 }
