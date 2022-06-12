@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const crypto = require('crypto');
 
 const sequelize = new Sequelize('ngBlogDb', 'root', 'root', {
     host: 'localhost',
@@ -8,6 +9,14 @@ const sequelize = new Sequelize('ngBlogDb', 'root', 'root', {
         timezone: process.env.db_timezone
     }
 });//Connection with the database
+
+
+//Models
+const User = sequelize.define('user', {
+    name: {type: Sequelize.STRING, allowNull: false, unique: true },
+    password: { type: Sequelize.STRING, allowNull: false },
+    salt: { type: Sequelize.STRING, allowNull: false }
+});
 
 const Article = sequelize.define('article', {
     title: { type: Sequelize.STRING },
@@ -20,7 +29,7 @@ const Article = sequelize.define('article', {
     published: { type: Sequelize.BOOLEAN }
 });
 
-const init = function() {
+const init = function() {//Initalize function sequelize
     sequelize
         .authenticate()
         .then(() => {
@@ -49,6 +58,8 @@ Article.sync({force: true}).then(() => {//THe force:true drops and creates the t
             published: false
         });
     });
+
+    User.sync();
 }; 
 
 const getArticles = function(callback) {
@@ -130,6 +141,45 @@ const createArticle = (req, callback) => {
     }).then(article => callback(article));
 }
 
+const addUser = (user, callback) => {
+    User.findOne({
+        where: {
+            name: user.name
+        }
+    }).then(user => {
+        if(user !== null) {
+            callback(false)
+        } else {
+            User.create({
+                name: user.name.toLowerCase(),
+                password: user.password,
+                salt: user.salt
+            }).then(callback(true));
+        }
+    });
+}
+
+const login = (req, callback) => {
+    User.findOne({
+        where: {
+            name: req.name,
+        }
+    }).then((user) => {
+        if(user !== null) {
+            let passwordHash = 
+                crypto.pbkdf2Sync(req.password, user.salt, 1000, 64, 'sha512')
+                    .toString('hex');
+            if(passwordHash === user.password) {
+                callback(true);
+                console.log('here');
+                return;
+                
+            }
+        }
+        callback(false);
+    });
+}
+
 module.exports.init = init;
 module.exports.getArticles = getArticles;
 module.exports.getArticleByKey = getArticleByKey;
@@ -139,3 +189,5 @@ module.exports.getDashboardArticleByKey = getDashboardArticleByKey;
 module.exports.updateArticle = updateArticle;
 module.exports.deleteArticle = deleteArticle;
 module.exports.createArticle = createArticle;
+module.exports.addUser = addUser;
+module.exports.login = login;
