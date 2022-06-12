@@ -17,4 +17,13 @@ export class AuthService {
       password
     });
   }
+
+  auth(): Observable<boolean> {
+    let token = '';
+    if(typeof localStorage !== undefined) {
+      token = localStorage.getItem('token')? <string>localStorage.getItem('token') : '';
+    }
+
+    return this.http.post<boolean>(`${environment.apiUrl}/user/auth`, { token });
+  };
 }
