@@ -24,7 +24,7 @@ module.exports = (app, sql) => {
                 res.sendStatus(401);
             } else {
                 let token = jwtUtil.signJwt(name);
-                res.send(token);
+                res.send({ token });
             }
         })
     });
